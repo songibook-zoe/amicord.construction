@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣新建建物太陽光電強制裝設儀表板</title>
+    <style>
+        :root {
+            --color-green-50: #f0fdf4;
+            --color-green-100: #dcfce7;
+            --color-green-300: #86efac;
+            --color-green-500: #22c55e;
+            --color-green-600: #16a34a;
+            --color-green-700: #15803d;
+            --color-amber-50: #fffbeb;
+            --color-amber-100: #fef3c7;
+            --color-amber-300: #fcd34d;
+            --color-amber-500: #f59e0b;
+            --color-slate-50: #f8fafc;
+            --color-slate-100: #f1f5f9;
+            --color-slate-200: #e2e8f0;
+            --color-slate-300: #cbd5e1;
+            --color-slate-500: #64748b;
+            --color-slate-700: #334155;
+            --color-slate-900: #0f172a;
+            --color-blue-50: #eff6ff;
+            --color-blue-500: #3b82f6;
+            --color-blue-600: #2563eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-slate-900);
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #eff6ff 100%);
+        }
+
+        body {
+            padding: 16px;
+            background: inherit;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-green-600) 0%, var(--color-green-700) 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 13px;
+            opacity: 0.95;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn {
+            padding: 10px 16px;
+            border: none;
+            background: var(--color-slate-100);
+            color: var(--color-slate-700);
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 200ms ease;
+            font-size: 13px;
+        }
+
+        .tab-btn.active {
+            background: var(--color-green-500);
+            color: white;
+        }
+
+        .tab-btn:hover {
+            background: var(--color-green-500);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--color-green-500);
+        }
+
+        .section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-green-700);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-slate-800);
+            margin: 16px 0 12px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .reg-card {
+            background: var(--color-slate-50);
+            border: 1px solid var(--color-slate-200);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .reg-card h3 {
+            color: var(--color-green-600);
+            margin-top: 0;
+        }
+
+        .reg-card .label {
+            font-weight: 600;
+            color: var(--color-slate-700);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        .reg-card .value {
+            color: var(--color-slate-900);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+
+        .comparison-table th {
+            background: var(--color-green-100);
+            color: var(--color-green-700);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-green-300);
+        }
+
+        .comparison-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--color-slate-200);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--color-green-50);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-required {
+            background: var(--color-green-100);
+            color: var(--color-green-700);
+        }
+
+        .status-exempt {
+            background: var(--color-slate-200);
+            color: var(--color-slate-700);
+        }
+
+        .status-conditional {
+            background: var(--color-amber-100);
+            color: var(--color-amber-700);
+        }
+
+        .metric-box {
+            background: var(--color-green-50);
+            border-left: 4px solid var(--color-green-500);
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--color-slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-green-700);
+        }
+
+        .calculator {
+            background: var(--color-blue-50);
+            border: 1px solid var(--color-blue-500);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .calculator h3 {
+            color: var(--color-blue-600);
+        }
+
+        .input-group {
+            margin: 12px 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-slate-700);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--color-slate-300);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--color-green-500);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        .result-box {
+            background: white;
+            border-left: 4px solid var(--color-green-500);
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-label {
+            font-size: 12px;
+            color: var(--color-slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-green-700);
+        }
+
+        .btn-calculate {
+            background: var(--color-green-500);
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 200ms ease;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .btn-calculate:hover {
+            background: var(--color-green-600);
+        }
+
+        .compliance-checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .checklist-item {
+            background: var(--color-green-50);
+            border-left: 3px solid var(--color-green-500);
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .checklist-item strong {
+            color: var(--color-green-700);
+        }
+
+        .exemption-list {
+            background: var(--color-slate-50);
+            border: 1px solid var(--color-slate-200);
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0;
+        }
+
+        .exemption-list li {
+            margin-left: 20px;
+            margin-bottom: 8px;
+            color: var(--color-slate-700);
+            font-size: 13px;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            font-size: 12px;
+            color: var(--color-slate-600);
+            border-top: 2px solid var(--color-green-300);
+        }
+
+        .expand-btn {
+            background: none;
+            border: none;
+            color: var(--color-green-600);
+            cursor: pointer;
+            font-weight: 600;
+            padding: 4px 8px;
+            font-size: 12px;
+            text-decoration: underline;
+        }
+
+        .expand-section {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--color-slate-200);
+        }
+
+        .expand-section.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .compliance-checklist {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 20px;
+            }
+            
+            .comparison-table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌱 台灣新建建物太陽光電強制裝設儀表板</h1>
+            <p>針對建築業/地產業者的法規解讀、成本評估與投資決策工具（2025年12月19日公告）</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('regulation')">📋 法規比對</button>
+            <button class="tab-btn" onclick="switchTab('costAnalysis')">💰 成本分析</button>
+            <button class="tab-btn" onclick="switchTab('calculator')">🧮 投資計算</button>
+            <button class="tab-btn" onclick="switchTab('buildingTypes')">🏢 建築類型適用</button>
+            <button class="tab-btn" onclick="switchTab('timeline')">⏱️ 實施時程</button>
+        </div>
+
+        <!-- 法規比對 Tab -->
+        <div id="regulation" class="tab-content active">
+            <div class="section">
+                <h2>⚖️ 新建300坪建物強制裝光電 vs. 千坪大樓17級風抵禦標準</h2>
+                
+                <div class="comparison-grid">
+                    <div class="reg-card">
+                        <h3>Article 9</h3>
+                        <h4 style="color: var(--color-slate-700); font-size: 13px; font-weight: 500;">新建300坪以上建物強制裝光電</h4>
+                        <div class="label">公告日期</div>
+                        <div class="value">2025/12/19</div>
+                        
+                        <div class="label">法規狀態</div>
+                        <div class="value"><span class="status-badge status-required">已公告</span></div>
+                        
+                        <div class="label">適用範圍</div>
+                        <div class="value">新建、增建、改建建築 ≥1000 平方公尺（≥300坪）</div>
+                        
+                        <div class="label">強制裝設基準</div>
+                        <div class="value">每20平方公尺設置1kW（最低50kW）</div>
+                        
+                        <div class="label">年度成效</div>
+                        <div class="value">年增66萬kW裝置容量，可供20萬戶家庭用電</div>
+                        
+                        <div class="label">市場影響</div>
+                        <div class="value">占10%建照案件，但建築面積占全體80%</div>
+                    </div>
+
+                    <div class="reg-card">
+                        <h3>Article 10</h3>
+                        <h4 style="color: var(--color-slate-700); font-size: 13px; font-weight: 500;">千坪大樓必須抗17級強陣風</h4>
+                        <div class="label">公告日期</div>
+                        <div class="value">2025/12/19</div>
+                        
+                        <div class="label">法規狀態</div>
+                        <div class="value"><span class="status-badge status-required">已公告</span></div>
+                        
+                        <div class="label">適用範圍</div>
+                        <div class="value">新建、增建、改建 ≥1000 平方公尺</div>
+                        
+                        <div class="label">風荷重標準</div>
+                        <div class="value">耐風荷重 ≥5400Pa（≥17級強陣風）</div>
+                        
+                        <div class="label">認證要求</div>
+                        <div class="value">須取得國家/國際認證，簽證效期至少20年</div>
+                        
+                        <div class="label">排除建築</div>
+                        <div class="value">B-4宗教、E殯葬、I危險物品類</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 24px;">✅ 適用建築類型（7大類）</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>建築分類</th>
+                            <th>用途代碼</th>
+                            <th>適用狀態</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>公共集會</td>
+                            <td>A</td>
+                            <td><span class="status-badge status-required">適用</span></td>
+                            <td>展館、劇院、體育館等</td>
+                        </tr>
+                        <tr>
+                            <td>商業</td>
+                            <td>B</td>
+                            <td><span class="status-badge status-conditional">有條件</span></td>
+                            <td>除B-4宗教建築外均適用</td>
+                        </tr>
+                        <tr>
+                            <td>工業倉儲</td>
+                            <td>C</td>
+                            <td><span class="status-badge status-conditional">有條件</span></td>
+                            <td>除危險物品類外均適用</td>
+                        </tr>
+                        <tr>
+                            <td>休閒文教</td>
+                            <td>D</td>
+                            <td><span class="status-badge status-required">適用</span></td>
+                            <td>學校、館所、運動設施等</td>
+                        </tr>
+                        <tr>
+                            <td>衛生福利</td>
+                            <td>F</td>
+                            <td><span class="status-badge status-required">適用</span></td>
+                            <td>醫院、療養院等</td>
+                        </tr>
+                        <tr>
+                            <td>辦公服務</td>
+                            <td>G</td>
+                            <td><span class="status-badge status-required">適用</span></td>
+                            <td>辦公樓、商業大樓等</td>
+                        </tr>
+                        <tr>
+                            <td>住宿</td>
+                            <td>H</td>
+                            <td><span class="status-badge status-required">適用</span></td>
+                            <td>旅館、飯店等</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🚫 免設條件</h3>
+                <ul class="exemption-list">
+                    <li><strong>受光條件不足：</strong>各縣市設定不同發電量門檻。例如台北市年發電量≤543 度/kW/年即可申請免設</li>
+                    <li><strong>宗教建築（B-4）：</strong>獨立豁免</li>
+                    <li><strong>殯葬設施（E）：</strong>獨立豁免</li>
+                    <li><strong>危險物品類（I）：</strong>獨立豁免</li>
+                </ul>
+
+                <button class="expand-btn" onclick="toggleExpand('regulationDetail')">+ 展開完整法規要點</button>
+                <div id="regulationDetail" class="expand-section">
+                    <h3>完整要點</h3>
+                    <div class="metric-box">
+                        <div class="metric-label">實施日期</div>
+                        <div class="metric-value">待行政院另訂</div>
+                    </div>
+                    <p style="color: var(--color-slate-700); margin: 12px 0; font-size: 13px;">根據經濟部與內政部聯合公告，本規範自通過行政院核定後上路。業界預估最快2026年起執行。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成本分析 Tab -->
+        <div id="costAnalysis" class="tab-content">
+            <div class="section">
+                <h2>💰 太陽光電裝設成本分析</h2>
+                
+                <h3>成本構成（以屋頂型為例）</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>成本項目</th>
+                            <th>單位成本</th>
+                            <th>占比</th>
+                            <th>說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>太陽能板模組</td>
+                            <td>NT$2.4~4.0萬/kW</td>
+                            <td>40-50%</td>
+                            <td>單晶矽、多晶矽，效率、品牌影響成本</td>
+                        </tr>
+                        <tr>
+                            <td>逆變器</td>
+                            <td>NT$5,000~1萬/台</td>
+                            <td>10-15%</td>
+                            <td>DC轉AC，品質直接影響發電效率</td>
+                        </tr>
+                        <tr>
+                            <td>結構支架</td>
+                            <td>NT$1.5~2萬/kW</td>
+                            <td>20-25%</td>
+                            <td>需耐17級強風（5400Pa），材料與設計費用高</td>
+                        </tr>
+                        <tr>
+                            <td>線路、配件</td>
+                            <td>NT$2,000~3,000/kW</td>
+                            <td>5-8%</td>
+                            <td>電氣系統、防護裝置等</td>
+                        </tr>
+                        <tr>
+                            <td>施工安裝</td>
+                            <td>NT$3,000~5,000/kW</td>
+                            <td>10-15%</td>
+                            <td>人工、機械、安全防護</td>
+                        </tr>
+                        <tr>
+                            <td><strong>總建置成本</strong></td>
+                            <td><strong>NT$4~7萬/kW</strong></td>
+                            <td><strong>100%</strong></td>
+                            <td><strong>依結構、難度、品牌浮動</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 20px;">📊 典型建案成本估算</h3>
+                
+                <div class="metric-box">
+                    <div class="metric-label">最低裝設規模（50kW案例）</div>
+                    <table class="comparison-table" style="margin: 12px 0; background: white;">
+                        <tr>
+                            <td><strong>場景：</strong></td>
+                            <td>商業大樓首次達成1000m²</td>
+                        </tr>
+                        <tr>
+                            <td><strong>安裝面積：</strong></td>
+                            <td>100平方公尺（約30坪）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>裝設容量：</strong></td>
+                            <td>50kW</td>
+                        </tr>
+                        <tr>
+                            <td><strong>建置成本：</strong></td>
+                            <td>NT$200~350萬</td>
+                        </tr>
+                        <tr>
+                            <td><strong>年發電量：</strong></td>
+                            <td>約6.4萬度（依日照時數）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>年售電收入：</strong></td>
+                            <td>約2.6~2.9萬元（按躉購費率3.7~4.1元/度）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>投資回本期：</strong></td>
+                            <td><span style="color: var(--color-green-700); font-weight: 700;">約10~14年</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="metric-box">
+                    <div class="metric-label">中型商辦案例（100kW）</div>
+                    <table class="comparison-table" style="margin: 12px 0; background: white;">
+                        <tr>
+                            <td><strong>場景：</strong></td>
+                            <td>辦公大樓、購物中心</td>
+                        </tr>
+                        <tr>
+                            <td><strong>安裝面積：</strong></td>
+                            <td>200平方公尺（約60坪）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>裝設容量：</strong></td>
+                            <td>100kW</td>
+                        </tr>
+                        <tr>
+                            <td><strong>建置成本：</strong></td>
+                            <td>NT$400~700萬</td>
+                        </tr>
+                        <tr>
+                            <td><strong>年發電量：</strong></td>
+                            <td>約12.8~15.3萬度</td>
+                        </tr>
+                        <tr>
+                            <td><strong>年售電收入：</strong></td>
+                            <td>約5.1~6.3萬元</td>
+                        </tr>
+                        <tr>
+                            <td><strong>投資回本期：</strong></td>
+                            <td><span style="color: var(--color-green-700); font-weight: 700;">約8~12年</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 20px;">🎯 2025年政府補助</h3>
+                <div class="compliance-checklist">
+                    <div class="checklist-item">
+                        <strong>中央補助：</strong>每kW補助NT$3,000（上限30萬元）
+                    </div>
+                    <div class="checklist-item">
+                        <strong>適用對象：</strong>屋頂面積&lt;1000m²的私有建築
+                    </div>
+                    <div class="checklist-item">
+                        <strong>地方加碼：</strong>各縣市政府額外補助（因地區而異）
+                    </div>
+                    <div class="checklist-item">
+                        <strong>申請期限：</strong>2025~2026年度（依地方公告）
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px;">⚡ 114年躉購費率（2025年度）</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>容量級距</th>
+                            <th>屋頂型（元/度）</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1~10kW</td>
+                            <td>5.71</td>
+                            <td>住宅型，最高躉購費</td>
+                        </tr>
+                        <tr>
+                            <td>10~20kW</td>
+                            <td>5.46</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>20~50kW</td>
+                            <td>4.29</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>50~100kW</td>
+                            <td>4.09</td>
+                            <td><strong>目標強制裝設級距</strong></td>
+                        </tr>
+                        <tr>
+                            <td>100~500kW</td>
+                            <td>3.75</td>
+                            <td><strong>大型商辦級距</strong></td>
+                        </tr>
+                        <tr>
+                            <td>500kW以上</td>
+                            <td>3.66</td>
+                            <td>規模經濟優勢</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 投資計算 Tab -->
+        <div id="calculator" class="tab-content">
+            <div class="section">
+                <h2>🧮 投資效益計算機</h2>
+                
+                <div class="calculator">
+                    <h3>建案光電投資評估工具</h3>
+                    
+                    <div class="input-group">
+                        <label>建築面積（平方公尺）</label>
+                        <input type="number" id="buildingArea" placeholder="例：1500" min="1000" step="100">
+                    </div>
+
+                    <div class="input-group">
+                        <label>預計裝設容量（kW）- 或自動計算</label>
+                        <input type="number" id="solarCapacity" placeholder="例：100" min="50" step="10">
+                        <small style="color: var(--color-slate-600); margin-top: 4px; display: block;">提示：若不填，系統將按「每20m²=1kW」自動計算</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>單位建置成本（元/kW）</label>
+                        <input type="number" id="costPerKw" placeholder="例：55000" value="55000" min="40000" max="70000" step="5000">
+                        <small style="color: var(--color-slate-600); margin-top: 4px; display: block;">建議範圍：NT$40,000~70,000</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>年日照時數（小時）</label>
+                        <input type="number" id="sunHours" placeholder="例：1200" value="1200" min="800" max="1500" step="50">
+                        <small style="color: var(--color-slate-600); margin-top: 4px; display: block;">台灣年均：1000~1400小時（北部偏低，南部偏高）</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>躉購費率（元/度）</label>
+                        <input type="number" id="feedInRate" placeholder="例：4.09" value="4.09" min="3.5" max="5.8" step="0.1">
+                        <small style="color: var(--color-slate-600); margin-top: 4px; display: block;">2025年屋頂型標準：3.66~5.71元/度</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>政府補助（元，可選）</label>
+                        <input type="number" id="govSubsidy" placeholder="例：300000" min="0" value="0">
+                        <small style="color: var(--color-slate-600); margin-top: 4px; display: block;">中央補助上限：30萬元 + 地方加碼</small>
+                    </div>
+
+                    <button class="btn-calculate" onclick="calculateROI()">🔢 計算投資效益</button>
+
+                    <div id="resultBox" class="result-box">
+                        <h3 style="color: var(--color-green-700); margin-top: 0;">計算結果</h3>
+                        
+                        <div class="metric-box">
+                            <div class="result-label">總建置成本</div>
+                            <div class="result-value" id="totalCost">-</div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="result-label">補助後淨投資</div>
+                            <div class="result-value" id="netInvestment">-</div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="result-label">年發電量</div>
+                            <div class="result-value" id="annualGeneration">-</div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="result-label">年售電收入（第一年）</div>
+                            <div class="result-value" id="annualRevenue">-</div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="result-label">投資回本期</div>
+                            <div class="result-value" id="paybackPeriod">-</div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="result-label">20年總發電量</div>
+                            <div class="result-value" id="totalGeneration20">-</div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="result-label">20年總售電收入</div>
+                            <div class="result-value" id="totalRevenue20">-</div>
+                        </div>
+
+                        <div style="background: var(--color-green-50); border-left: 4px solid var(--color-green-500); padding: 12px; border-radius: 4px; margin-top: 16px; color: var(--color-green-700); font-size: 13px;">
+                            <strong>💡 提示：</strong>以上計算不含維護成本（年約總成本0.5~0.8%）、系統效率衰減（每年約0.7~0.8%）及稅務影響。實際回本期可能略長。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 建築類型適用 Tab -->
+        <div id="buildingTypes" class="tab-content">
+            <div class="section">
+                <h2>🏢 建築類型適用性與成本評估</h2>
+                
+                <p style="color: var(--color-slate-700); margin-bottom: 16px;">以下針對七大建築用途，列示典型規模、裝設容量、預估成本與投資回本期。</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>建築用途</th>
+                            <th>代碼</th>
+                            <th>典型規模</th>
+                            <th>估算容量</th>
+                            <th>建置成本</th>
+                            <th>年發電量</th>
+                            <th>回本期</th>
+                            <th>特殊考慮</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>公共集會</strong></td>
+                            <td>A</td>
+                            <td>≥1000m²</td>
+                            <td>50~150kW</td>
+                            <td>200~525萬</td>
+                            <td>6.4~19.2萬度</td>
+                            <td>10~14年</td>
+                            <td>配合營運時段計畫</td>
+                        </tr>
+                        <tr>
+                            <td><strong>商業</strong></td>
+                            <td>B</td>
+                            <td>≥1000m²</td>
+                            <td>50~200kW</td>
+                            <td>200~700萬</td>
+                            <td>6.4~25.6萬度</td>
+                            <td>8~14年</td>
+                            <td>B-4宗教建築免設</td>
+                        </tr>
+                        <tr style="background: var(--color-green-50);">
+                            <td><strong>工業倉儲</strong></td>
+                            <td>C</td>
+                            <td>≥1000m²</td>
+                            <td>100~300kW</td>
+                            <td>400~1050萬</td>
+                            <td>12.8~38.4萬度</td>
+                            <td>8~12年</td>
+                            <td><span style="color: var(--color-green-700); font-weight: 600;">屋頂寬敞，最優案例</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>休閒文教</strong></td>
+                            <td>D</td>
+                            <td>≥1000m²</td>
+                            <td>75~200kW</td>
+                            <td>300~700萬</td>
+                            <td>9.6~25.6萬度</td>
+                            <td>10~14年</td>
+                            <td>校園教育機會</td>
+                        </tr>
+                        <tr>
+                            <td><strong>衛生福利</strong></td>
+                            <td>F</td>
+                            <td>≥1000m²</td>
+                            <td>50~100kW</td>
+                            <td>200~350萬</td>
+                            <td>6.4~12.8萬度</td>
+                            <td>12~16年</td>
+                            <td>社會責任加分</td>
+                        </tr>
+                        <tr>
+                            <td><strong>辦公服務</strong></td>
+                            <td>G</td>
+                            <td>≥1000m²</td>
+                            <td>50~150kW</td>
+                            <td>200~525萬</td>
+                            <td>6.4~19.2萬度</td>
+                            <td>10~14年</td>
+                            <td>ESG績效</td>
+                        </tr>
+                        <tr>
+                            <td><strong>住宿</strong></td>
+                            <td>H</td>
+                            <td>≥1000m²</td>
+                            <td>50~150kW</td>
+                            <td>200~525萬</td>
+                            <td>6.4~19.2萬度</td>
+                            <td>10~14年</td>
+                            <td>綠色旅宿行銷</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 24px;">⚠️ 設計要點速檢表</h3>
+                <div class="compliance-checklist">
+                    <div class="checklist-item">
+                        <strong>✓ 結構安全：</strong>模組耐風荷重≥5400Pa（17級強風）
+                    </div>
+                    <div class="checklist-item">
+                        <strong>✓ 防水防鏽：</strong>20年使用壽命，材料品質與施工細節
+                    </div>
+                    <div class="checklist-item">
+                        <strong>✓ 日照評估：</strong>受光充足，年發電量不低於門檻值
+                    </div>
+                    <div class="checklist-item">
+                        <strong>✓ 屋頂結構：</strong>混凝土、鐵皮、鋼構等不同結構成本差異大
+                    </div>
+                    <div class="checklist-item">
+                        <strong>✓ 電力配接：</strong>併聯到台電電網，需符合規格
+                    </div>
+                    <div class="checklist-item">
+                        <strong>✓ 施工期程：</strong>計畫額外3~6個月工期
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 時程表 Tab -->
+        <div id="timeline" class="tab-content">
+            <div class="section">
+                <h2>⏱️ 實施時程與業主應對</h2>
+                
+                <h3>📅 法規實施路徑</h3>
+                <div style="background: var(--color-blue-50); border-left: 4px solid var(--color-blue-500); padding: 16px; border-radius: 6px; margin: 16px 0;">
+                    <div style="margin-bottom: 12px;">
+                        <strong style="color: var(--color-blue-600);">2025年12月19日</strong><br>
+                        <span style="color: var(--color-slate-700);">內政部與經濟部聯合公告「建築物設置太陽光電發電設備標準」</span>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <strong style="color: var(--color-blue-600);">2026年起（預計）</strong><br>
+                        <span style="color: var(--color-slate-700);">行政院核定實施，納入新建築法規審核</span>
+                    </div>
+                    <div>
+                        <strong style="color: var(--color-blue-600);">2026年起新建案</strong><br>
+                        <span style="color: var(--color-slate-700);">所有≥1000m²新建、增建、改建建築納入強制裝設範圍</span>
+                    </div>
+                </div>
+
+                <h3>🎯 開發業者建議應對時程</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>時期</th>
+                            <th>重點工作</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>現在~2026年Q1</strong></td>
+                            <td>法規風險評估、設計單位溝通、光電顧問諮詢</td>
+                            <td>搶先掌握規則，避免設計返工</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2026年Q2起</strong></td>
+                            <td>新建案設計時納入光電配置、取得認證廠商報價</td>
+                            <td>提前規劃，成本相對較低</td>
+                        </tr>
+                        <tr style="background: var(--color-amber-50);">
+                            <td><strong>2026年Q4前</strong></td>
+                            <td>已核准設計的案件可申請免設或變更</td>
+                            <td>過渡期政策，把握時機</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2027年起</strong></td>
+                            <td>所有新案必須符合強制裝設規範</td>
+                            <td>無例外</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 24px;">💼 成本與收益管理建議</h3>
+                <div class="compliance-checklist">
+                    <div class="checklist-item">
+                        <strong>預期成本：</strong>每kW建置NT$4~7萬（最低50kW起）
+                    </div>
+                    <div class="checklist-item">
+                        <strong>回本周期：</strong>8~14年（依規模、日照、躉購費率）
+                    </div>
+                    <div class="checklist-item">
+                        <strong>補助來源：</strong>中央最高30萬，地方加碼5~30萬
+                    </div>
+                    <div class="checklist-item">
+                        <strong>銷售加值：</strong>綠建築標章、ESG績效、能源自給宣傳
+                    </div>
+                    <div class="checklist-item">
+                        <strong>風險管理：</strong>簽訂長期售電合約（20年），規避電價波動
+                    </div>
+                    <div class="checklist-item">
+                        <strong>維護成本：</strong>年約總投資0.5~0.8%（清潔、檢修、保險）
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 24px;">❓ 常見疑問</h3>
+                <button class="expand-btn" onclick="toggleExpand('faqSection')">+ 展開Q&A</button>
+                <div id="faqSection" class="expand-section">
+                    <div style="background: var(--color-slate-50); padding: 12px; border-radius: 6px; margin: 12px 0;">
+                        <strong style="color: var(--color-slate-900);">Q: 已取得建照的案件會受影響嗎？</strong><br>
+                        <span style="color: var(--color-slate-700); font-size: 13px;">A: 政府預期設定過渡期，已核准設計可申請免設或變更。具體時限待行政院公告。</span>
+                    </div>
+                    <div style="background: var(--color-slate-50); padding: 12px; border-radius: 6px; margin: 12px 0;">
+                        <strong style="color: var(--color-slate-900);">Q: 屋頂耐風標準17級強風是什麼概念？</strong><br>
+                        <span style="color: var(--color-slate-700); font-size: 13px;">A: 5400Pa等於風速約40m/s（144 km/h），相當颱風最強等級。材料與安裝工法需嚴格把關。</span>
+                    </div>
+                    <div style="background: var(--color-slate-50); padding: 12px; border-radius: 6px; margin: 12px 0;">
+                        <strong style="color: var(--color-slate-900);">Q: 日照不足可以完全免設嗎？</strong><br>
+                        <span style="color: var(--color-slate-700); font-size: 13px;">A: 各縣市有發電量門檻。例如台北市年發電量≤543度/kW/年可申請免設。需經官方評定。</span>
+                    </div>
+                    <div style="background: var(--color-slate-50); padding: 12px; border-radius: 6px; margin: 12px 0;">
+                        <strong style="color: var(--color-slate-900);">Q: 業主可以自行決定光電設置地點或交由承租戶？</strong><br>
+                        <span style="color: var(--color-slate-700); font-size: 13px;">A: 法規要求強制裝設，但營運模式（自管、委外、分益）可協商。建議於合約中明確責任分配。</span>
+                    </div>
+                    <div style="background: var(--color-slate-50); padding: 12px; border-radius: 6px; margin: 12px 0;">
+                        <strong style="color: var(--color-slate-900);">Q: 售電收入如何分配？稅務影響？</strong><br>
+                        <span style="color: var(--color-slate-700); font-size: 13px;">A: 需依台電躉購費率合約約定。稅務上屬營業所得，應報經財政部核釋。建議諮詢稅務顧問。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>📌 免責聲明：</strong> 本儀表板資訊基於2025年12月19日公告數據製作，成本估算與收益預測為一般參考，不代表實際投資回報。建議諮詢專業光電廠商、建築師、律師與稅務顧問，進行完整的項目評估。<br><br>
+            <strong>📞 相關資訊：</strong> 內政部營建署、經濟部能源署、台灣電力公司躉購費率公告
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function toggleExpand(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('show');
+            const btn = event.target;
+            btn.textContent = section.classList.contains('show') ? '- 收起詳情' : '+ 展開完整法規要點';
+        }
+
+        function calculateROI() {
+            const buildingArea = parseFloat(document.getElementById('buildingArea').value);
+            const solarCapacity = parseFloat(document.getElementById('solarCapacity').value) || (buildingArea / 20);
+            const costPerKw = parseFloat(document.getElementById('costPerKw').value);
+            const sunHours = parseFloat(document.getElementById('sunHours').value);
+            const feedInRate = parseFloat(document.getElementById('feedInRate').value);
+            const govSubsidy = parseFloat(document.getElementById('govSubsidy').value);
+
+            if (!buildingArea || !solarCapacity || !costPerKw || !sunHours || !feedInRate) {
+                alert('請填入所有必填項目');
+                return;
+            }
+
+            // Calculate values
+            const totalCost = solarCapacity * costPerKw;
+            const netInvestment = totalCost - govSubsidy;
+            const annualGeneration = solarCapacity * sunHours;
+            const annualRevenue = annualGeneration * feedInRate;
+            const paybackYears = (netInvestment / annualRevenue).toFixed(1);
+            const totalGeneration20 = annualGeneration * 20 * 0.85; // Assuming 0.85 efficiency factor
+            const totalRevenue20 = totalGeneration20 * feedInRate * 0.95; // Accounting for degradation
+
+            // Display results
+            const resultBox = document.getElementById('resultBox');
+            document.getElementById('totalCost').textContent = `NT$${totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 元`;
+            document.getElementById('netInvestment').textContent = `NT$${netInvestment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 元`;
+            document.getElementById('annualGeneration').textContent = `${annualGeneration.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 度`;
+            document.getElementById('annualRevenue').textContent = `NT$${annualRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 元`;
+            document.getElementById('paybackPeriod').textContent = `${paybackYears} 年`;
+            document.getElementById('totalGeneration20').textContent = `${totalGeneration20.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 度`;
+            document.getElementById('totalRevenue20').textContent = `NT$${totalRevenue20.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 元`;
+
+            resultBox.classList.add('show');
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 設定預設容量計算
+            document.getElementById('buildingArea').addEventListener('change', function() {
+                const area = parseFloat(this.value);
+                if (area && !document.getElementById('solarCapacity').value) {
+                    document.getElementById('solarCapacity').value = Math.max(50, Math.round(area / 20));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
