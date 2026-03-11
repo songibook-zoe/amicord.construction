@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amicord AIoT - 柔和玻璃擬態登入</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontSize: {
+                        'xs': '19px', 'sm': '19px', 'base': '19px',
+                        'lg': '22px', 'xl': '26px', '2xl': '32px',
+                        '3xl': '38px', '4xl': '48px',
+                    },
+                    colors: {
+                        brand: {
+                            red: '#9b1c1c',
+                            grey: '#374151',
+                            dark: '#111827'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* 全域字體規範 */
+        html { font-size: 19px; }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; overflow-x: hidden; }
+
+        /* 柔和網格漸層背景 (Mesh Gradient) */
+        .mesh-gradient {
+            background-color: #1a1a1a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(155, 28, 28, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(55, 65, 81, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(155, 28, 28, 0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(30, 41, 59, 0.5) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(127, 29, 29, 0.2) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* 玻璃擬態卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* 輸入框玻璃效果 */
+        .glass-input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .glass-input:focus {
+            border-color: #9b1c1c;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .input-icon { color: rgba(255, 255, 255, 0.5); }
+    </style>
+</head>
+<body class="mesh-gradient text-white min-h-screen flex flex-col items-center justify-center p-4">
+
+    <header class="w-full text-center py-6 mb-4">
+        <h1 class="text-3xl font-bold text-white mb-2 tracking-tight drop-shadow-md">至美科技股份有限公司</h1>
+        <h2 class="text-xl text-white/70 font-medium">GeoTracer for IoV8</h2>
+    </header>
+
+    <main class="w-full max-w-[1200px] glass-card rounded-3xl overflow-hidden flex flex-col">
+        
+        <div class="flex justify-between items-center px-6 py-4 border-b border-white/10">
+            <div class="flex items-center">
+               <svg width="40" height="40" viewBox="0 0 100 100" class="mr-2">
+
+                    <path d="M 50 15 L 85 85 L 65 85 L 50 55 L 35 85 L 15 85 Z" fill="#9b1c1c" />
+
+                    <rect x="35" y="65" width="30" height="6" fill="#374151"/>
+
+                </svg>
+                <span class="text-[28px] font-bold text-white tracking-tight">Fleet Management Cloud</span>
+            </div>
+            
+            <div class="relative cursor-pointer mr-2 mt-2">
+                <i data-lucide="bell" class="w-8 h-8 text-white/80 hover:text-brand-red transition-colors"></i>
+                <span class="absolute -top-3 -right-4 bg-brand-red text-white w-7 h-7 flex items-center justify-center rounded-full text-base font-bold shadow-lg">
+                    0
+                </span>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row min-h-[680px]">
+            
+            <div class="flex-1 p-8 hidden lg:flex items-center justify-center relative overflow-hidden">
+                <svg viewBox="0 0 500 400" class="w-full h-full max-h-[550px] drop-shadow-2xl">
+                    <g transform="translate(250, 220) scale(1.1)">
+                        <polygon points="0,-120 180,-30 0,60 -180,-30" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                        
+                        <g transform="translate(-160, -180)">
+                            <rect x="0" y="0" width="140" height="100" rx="8" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.2)"/>
+                            <rect x="6" y="6" width="128" height="88" rx="4" fill="rgba(255,255,255,0.1)"/>
+                            <rect x="15" y="15" width="50" height="35" rx="2" fill="#9b1c1c" opacity="0.6"/> 
+                        </g>
+
+                        <g transform="translate(40, -10)">
+                            <rect x="0" y="0" width="70" height="28" rx="4" fill="#9b1c1c" class="drop-shadow-[0_0_10px_rgba(155,28,28,0.5)]"/>
+                            <rect x="10" y="-8" width="50" height="20" rx="2" fill="#ffffff" opacity="0.3"/> 
+                        </g>
+
+                        <g transform="translate(-120, -60)">
+                            <rect x="0" y="0" width="70" height="28" rx="4" fill="#374151" stroke="rgba(255,255,255,0.3)"/>
+                            <rect x="10" y="-8" width="50" height="20" rx="2" fill="#ffffff" opacity="0.2"/>
+                        </g>
+
+                        <g transform="translate(-40, 20)">
+                            <rect x="0" y="0" width="35" height="18" rx="4" fill="#9b1c1c"/>
+                        </g>
+
+                        <g transform="translate(80, -70)">
+                            <rect x="0" y="0" width="35" height="18" rx="4" fill="#111827" stroke="rgba(255,255,255,0.2)"/>
+                        </g>
+
+                        <g transform="translate(10, -50)">
+                            <path d="M0,0 C-12,-18 -18,-30 -18,-42 A18,18 0 1,1 18,-42 C18,-30 12,-18 0,0 Z" fill="#9b1c1c"/>
+                            <circle cx="0" cy="-42" r="6" fill="#ffffff"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="flex-1 p-6 sm:p-10 flex items-center justify-center">
+                <div class="w-full max-w-[480px] space-y-8">
+                    
+                    <div class="text-center">
+                        <span class="text-[32px] font-bold text-white tracking-widest">車聯網智慧影像辨識</span>
+                        <div class="h-1 w-20 bg-brand-red mx-auto mt-2 rounded-full"></div>
+                    </div>
+
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div class="relative">
+                            <input type="text" placeholder="使用者帳號" 
+                                class="w-full glass-input rounded-xl p-4 placeholder-white/30 focus:outline-none transition-all">
+                        </div>
+
+                        <div class="relative">
+                            <input type="text" placeholder="登入代碼" 
+                                class="w-full glass-input rounded-xl p-4 pr-12 placeholder-white/30 focus:outline-none transition-all appearance-none">
+                            <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 input-icon w-6 h-6"></i>
+                        </div>
+
+                        <div class="relative">
+                            <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 input-icon w-6 h-6"></i>
+                            <input type="password" placeholder="密碼" 
+                                class="w-full glass-input rounded-xl p-4 pl-12 placeholder-white/30 focus:outline-none transition-all">
+                        </div>
+
+                        <div class="relative flex gap-3">
+                            <input type="text" placeholder="驗證碼" 
+                                class="w-full glass-input rounded-xl p-4 placeholder-white/30 focus:outline-none transition-all">
+                            <div class="shrink-0 w-[120px] glass-card rounded-xl flex items-center justify-center font-bold text-brand-red tracking-widest cursor-pointer hover:bg-white/10 transition-colors select-none">
+                                8A4G
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center cursor-pointer text-white/70 hover:text-white transition-colors">
+                                <input type="checkbox" class="w-6 h-6 accent-brand-red cursor-pointer">
+                                <span class="ml-2">記住我</span>
+                            </label>
+                            <a href="#" class="text-brand-red hover:text-red-400 font-medium transition-colors">忘記密碼？</a>
+                        </div>
+
+                        <button type="submit" 
+                            class="w-full bg-brand-red hover:bg-red-700 text-white rounded-xl py-4 font-semibold mt-6 transition-all shadow-lg hover:shadow-red-900/40 active:scale-[0.98]">
+                            立即登入 (Login)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
